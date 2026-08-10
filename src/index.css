@@ -396,11 +396,29 @@ footer {
 .spotify-mini {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.25rem;
+  gap: 1.1rem;
+  padding: 1.1rem 1.4rem;
   border: 1px solid var(--border);
-  border-radius: 12px;
-  background: #141414;
+  border-radius: 14px;
+  background: #161616;
+}
+
+.spotify-mini-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+
+.icon-btn {
+  width: 32px;
+  height: 32px;
+}
+
+.icon-btn svg {
+  width: 15px;
+  height: 15px;
 }
 
 .spotify-mini.is-clickable {
@@ -414,11 +432,15 @@ footer {
 }
 
 .spotify-mini-art {
-  width: 48px;
-  height: 48px;
-  border-radius: 6px;
+  width: 52px;
+  height: 52px;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
   object-fit: cover;
+  object-position: center;
+  display: block;
   flex-shrink: 0;
+  background: #1a1a1a;
 }
 
 .spotify-mini-info {
