@@ -1,6 +1,6 @@
 export const profile = {
   name: "Vanessa",
-  role: "Software engineer",
+  role: "SOFTWARE ENGINEER",
   heroTagline:
     "I build modern web applications for businesses that value clarity, performance, and long-term scalability.",
   email: "aviwebstudios@gmail.com",
