@@ -72,6 +72,30 @@ function EqBars({ className = "spotify-eq" }) {
   );
 }
 
+const V_BARS = [
+  { duration: 900, delay: 0 },
+  { duration: 760, delay: 150 },
+  { duration: 980, delay: 300 },
+  { duration: 820, delay: 450 },
+];
+
+function VerticalEqBars() {
+  return (
+    <div className="np-modal-eq" aria-hidden="true">
+      {V_BARS.map((bar, i) => (
+        <span
+          key={i}
+          className="np-modal-eq-bar"
+          style={{
+            animationDuration: `${bar.duration}ms`,
+            animationDelay: `${bar.delay}ms`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 export default function Spotify() {
   const [data, setData] = useState(null);
   const [open, setOpen] = useState(false);
@@ -104,6 +128,18 @@ export default function Spotify() {
     }
     if (open) window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  // Lock page scroll while the modal is open so long titles scroll
+  // inside the modal instead of pushing the whole page down.
+  useEffect(() => {
+    if (open) {
+      const prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = prevOverflow;
+      };
+    }
   }, [open]);
 
   if (data === null) return null;
@@ -221,7 +257,7 @@ export default function Spotify() {
             <div className="np-modal-body">
               <div className="np-modal-toprow">
                 <p className="np-modal-label">I'm currently listening to</p>
-                <EqBars className="np-modal-eq" />
+                <VerticalEqBars />
               </div>
 
               <h2 className="np-modal-title">{data.title}</h2>
