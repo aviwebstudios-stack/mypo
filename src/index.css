@@ -593,6 +593,7 @@ footer {
   height: 18px;
 }
 
+
 .np-modal-backdrop {
   position: fixed;
   inset: 0;
@@ -607,11 +608,13 @@ footer {
 .np-modal {
   position: relative;
   width: 100%;
-  max-width: 420px;
+  max-width: 460px;
   background: #141414;
   border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 1.75rem;
+  padding: 1.5rem;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .np-modal-close {
@@ -629,85 +632,168 @@ footer {
   font-size: 0.85rem;
   cursor: pointer;
   border: none;
+  z-index: 2;
 }
 
 .np-modal-close:hover {
   background: rgba(255, 255, 255, 0.16);
 }
 
-.np-modal-art {
+/* Full-width art with glow + sheen, same treatment as the mini card */
+.np-modal-art-wrap {
+  position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  height: 18rem;
+}
+
+.np-modal-art-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.45;
+  filter: blur(20px) saturate(1.5);
+}
+
+.np-modal-art-sheen {
+  position: absolute;
+  inset: -1px;
+  border-radius: 8px;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0.25),
+    rgba(255, 255, 255, 0.05),
+    rgba(0, 0, 0, 0.3)
+  );
+  opacity: 0.8;
+}
+
+.np-modal-art-img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 1.25rem;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.32);
+}
+
+.np-modal-body {
+  margin-top: 1.25rem;
+  min-width: 0;
+}
+
+.np-modal-toprow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 .np-modal-label {
   font-size: 0.85rem;
   color: var(--gold);
-  opacity: 0.9;
-  margin-bottom: 0.5rem;
+  opacity: 0.85;
+}
+
+.np-modal-eq {
+  flex-shrink: 0;
 }
 
 .np-modal-title {
-  font-size: 1.7rem;
-  margin-bottom: 0.25rem;
+  margin-top: 0.5rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 1.25;
+  color: var(--text);
 }
 
 .np-modal-artist {
+  margin-top: 0.25rem;
   font-size: 1rem;
   color: var(--text-dim);
 }
 
 .np-modal-album {
+  margin-top: 0.65rem;
   font-size: 0.85rem;
   color: var(--text-dim);
-  opacity: 0.7;
-  margin-bottom: 1rem;
+  opacity: 0.65;
 }
 
 .np-modal-badge {
-  display: inline-block;
+  display: inline-flex;
+  margin-top: 1.1rem;
   font-size: 0.75rem;
+  text-transform: capitalize;
   color: var(--text-dim);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 999px;
   padding: 0.3rem 0.85rem;
-  margin-bottom: 1.5rem;
 }
 
 .np-modal-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-top: 1.4rem;
 }
 
 .np-action-btn {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: #fff;
-  padding: 0.6rem 1rem;
+  justify-content: center;
+  gap: 0.4rem;
+  height: 40px;
+  min-width: 0;
   border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-dim);
+  font-size: 0.72rem;
+  padding: 0 0.6rem;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
 }
 
-.np-action-yt {
-  background: #ff3b30;
+.np-action-btn:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
 }
 
-.np-action-spotify {
-  background: #1a1a1a;
-  color: #1db954;
-  border: 1px solid var(--border);
+.np-action-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 
-.np-action-apple {
-  background: #fa2d6e;
+.np-action-icon svg {
+  width: 100%;
+  height: 100%;
 }
 
+.np-action-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 420px) {
+  .np-modal-art-wrap {
+    height: 14rem;
+  }
+
+  .np-modal-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .np-action-btn {
+    justify-content: flex-start;
+    padding: 0 0.9rem;
+  }
+}
 /* ============================================
    PROJECT DETAILS PAGE
    ============================================ */

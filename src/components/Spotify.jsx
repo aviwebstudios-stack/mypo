@@ -54,9 +54,9 @@ const WAVE_BARS = [
   { height: 8, duration: 880, delay: 160 },
 ];
 
-function EqBars() {
+function EqBars({ className = "spotify-eq" }) {
   return (
-    <div className="spotify-eq" aria-hidden="true">
+    <div className={className} aria-hidden="true">
       {WAVE_BARS.map((bar, i) => (
         <span
           key={i}
@@ -204,44 +204,70 @@ export default function Spotify() {
               ✕
             </button>
 
-            <img
-              src={data.albumImageUrl}
-              alt={data.album}
-              className="np-modal-art"
-            />
+            <div className="np-modal-art-wrap">
+              <div
+                className="np-modal-art-glow"
+                style={{ backgroundImage: `url(${data.albumImageUrl})` }}
+                aria-hidden="true"
+              />
+              <div className="np-modal-art-sheen" aria-hidden="true" />
+              <img
+                src={data.albumImageUrl}
+                alt={data.album}
+                className="np-modal-art-img"
+              />
+            </div>
 
-            <p className="np-modal-label">I'm currently listening to</p>
-            <h3 className="np-modal-title font-display">{data.title}</h3>
-            <p className="np-modal-artist">{data.artist}</p>
-            <p className="np-modal-album">{data.album}</p>
+            <div className="np-modal-body">
+              <div className="np-modal-toprow">
+                <p className="np-modal-label">I'm currently listening to</p>
+                <EqBars className="np-modal-eq" />
+              </div>
 
-            <span className="np-modal-badge">Spotify</span>
+              <h2 className="np-modal-title">{data.title}</h2>
+              <p className="np-modal-artist">{data.artist}</p>
+              <p className="np-modal-album">{data.album}</p>
 
-            <div className="np-modal-actions">
-              <a
-                href={data.links.youtubeMusic}
-                target="_blank"
-                rel="noreferrer"
-                className="np-action-btn np-action-yt"
-              >
-                <IconYouTube /> YouTube Music
-              </a>
-              <a
-                href={data.links.spotify}
-                target="_blank"
-                rel="noreferrer"
-                className="np-action-btn np-action-spotify"
-              >
-                <IconSpotify /> Spotify
-              </a>
-              <a
-                href={data.links.appleMusic}
-                target="_blank"
-                rel="noreferrer"
-                className="np-action-btn np-action-apple"
-              >
-                <IconAppleMusic gradientId="apple-music-gradient-modal" /> Apple Music
-              </a>
+              <span className="np-modal-badge">Spotify</span>
+
+              <div className="np-modal-actions">
+                <a
+                  href={data.links.youtubeMusic}
+                  target="_blank"
+                  rel="noreferrer"
+                  title="Play on YouTube Music"
+                  className="np-action-btn"
+                >
+                  <span className="np-action-icon">
+                    <IconYouTube />
+                  </span>
+                  <span className="np-action-label">YouTube Music</span>
+                </a>
+                <a
+                  href={data.links.spotify}
+                  target="_blank"
+                  rel="noreferrer"
+                  title="Play on Spotify"
+                  className="np-action-btn"
+                >
+                  <span className="np-action-icon">
+                    <IconSpotify />
+                  </span>
+                  <span className="np-action-label">Spotify</span>
+                </a>
+                <a
+                  href={data.links.appleMusic}
+                  target="_blank"
+                  rel="noreferrer"
+                  title="Play on Apple Music"
+                  className="np-action-btn"
+                >
+                  <span className="np-action-icon">
+                    <IconAppleMusic gradientId="apple-music-gradient-modal" />
+                  </span>
+                  <span className="np-action-label">Apple Music</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
