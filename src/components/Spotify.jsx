@@ -1,9 +1,23 @@
 import { useEffect, useState } from "react";
+import { FaPlay, FaSpotify } from "react-icons/fa";
+import { SiApplemusic } from "react-icons/si";
 
 const POLL_INTERVAL = 15000; // 15s
 
+function EqBars() {
+  return (
+    <span className="eq-badge" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+  );
+}
+
 export default function Spotify() {
   const [data, setData] = useState(null);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -27,99 +41,152 @@ export default function Spotify() {
     };
   }, []);
 
-  // Avoid a flash of "not playing" before the first fetch resolves
+  // Close modal with Escape
+  useEffect(() => {
+    function onKey(e) {
+      if (e.key === "Escape") setOpen(false);
+    }
+    if (open) window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   if (data === null) return null;
 
   const isPlaying = data.isPlaying;
 
   return (
-    <section className="wrap spotify-section">
-      <div className="spotify-card">
-        {isPlaying ? (
-          <>
-            <div className="spotify-now">
+    <>
+      <section className="wrap spotify-section">
+        <div
+          className={`spotify-mini${isPlaying ? " is-clickable" : ""}`}
+          onClick={() => isPlaying && setOpen(true)}
+          role={isPlaying ? "button" : undefined}
+          tabIndex={isPlaying ? 0 : undefined}
+        >
+          {isPlaying ? (
+            <>
               <img
                 src={data.albumImageUrl}
                 alt={data.album}
-                className="spotify-art"
+                className="spotify-mini-art"
               />
-              <div className="spotify-info">
-                <p className="spotify-text">I'm currently listening to</p>
-                <p className="spotify-song">
+              <div className="spotify-mini-info">
+                <p className="spotify-mini-label">I'm currently listening to</p>
+                <p className="spotify-mini-song">
                   {data.title} <span className="spotify-dash">–</span>{" "}
                   {data.artist}
                 </p>
+                <p className="spotify-mini-platform">Spotify</p>
               </div>
-            </div>
 
-            <div className="spotify-links">
-              <span className="eq-bars" aria-hidden="true">
-                <span></span>
-                <span></span>
-                <span></span>
-              </span>
+              <div className="spotify-mini-actions">
+                <EqBars />
+                <a
+                  href={data.links.youtubeMusic}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="icon-btn icon-btn-yt"
+                  aria-label="Listen on YouTube Music"
+                  title="YouTube Music"
+                >
+                  <FaPlay />
+                </a>
+                <a
+                  href={data.links.spotify}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="icon-btn icon-btn-spotify"
+                  aria-label="Listen on Spotify"
+                  title="Spotify"
+                >
+                  <FaSpotify />
+                </a>
+                <a
+                  href={data.links.appleMusic}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="icon-btn icon-btn-apple"
+                  aria-label="Listen on Apple Music"
+                  title="Apple Music"
+                >
+                  <SiApplemusic />
+                </a>
+              </div>
+            </>
+          ) : (
+            <>
+              <p className="spotify-text">
+                Not listening to anything right now.
+              </p>
+              <img
+                src="/images/spongebob-sleeping.gif"
+                alt="Sleeping SpongeBob"
+                className="spotify-gif"
+              />
+            </>
+          )}
+        </div>
+      </section>
 
+      {open && isPlaying && (
+        <div
+          className="np-modal-backdrop"
+          onClick={() => setOpen(false)}
+        >
+          <div className="np-modal" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="np-modal-close"
+              onClick={() => setOpen(false)}
+              aria-label="Close"
+            >
+              ✕
+            </button>
+
+            <img
+              src={data.albumImageUrl}
+              alt={data.album}
+              className="np-modal-art"
+            />
+
+            <p className="np-modal-label">I'm currently listening to</p>
+            <h3 className="np-modal-title font-display">{data.title}</h3>
+            <p className="np-modal-artist">{data.artist}</p>
+            <p className="np-modal-album">{data.album}</p>
+
+            <span className="np-modal-badge">Spotify</span>
+
+            <div className="np-modal-actions">
               <a
                 href={data.links.youtubeMusic}
                 target="_blank"
                 rel="noreferrer"
-                className="spotify-link-icon spotify-link-yt"
-                aria-label="Listen on YouTube Music"
-                title="YouTube Music"
+                className="np-action-btn np-action-yt"
               >
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path d="M9 8l7 4-7 4V8z" fill="currentColor" />
-                </svg>
+                <FaPlay /> YouTube Music
               </a>
-
               <a
                 href={data.links.spotify}
                 target="_blank"
                 rel="noreferrer"
-                className="spotify-link-icon spotify-link-spotify"
-                aria-label="Listen on Spotify"
-                title="Spotify"
+                className="np-action-btn np-action-spotify"
               >
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M6 10.5c3.5-1 8-.6 11 1.2M6.5 13.5c3-1 6.5-.6 9 1M7 16.5c2.4-.7 5-.4 7 .8"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                  />
-                </svg>
+                <FaSpotify /> Spotify
               </a>
-
               <a
                 href={data.links.appleMusic}
                 target="_blank"
                 rel="noreferrer"
-                className="spotify-link-icon spotify-link-apple"
-                aria-label="Listen on Apple Music"
-                title="Apple Music"
+                className="np-action-btn np-action-apple"
               >
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M15 6.5v7.7a2.6 2.6 0 1 1-1.3-2.25V9L10 9.9v5.3a2.6 2.6 0 1 1-1.3-2.25V7.8L15 6.5z"
-                    fill="currentColor"
-                  />
-                </svg>
+                <SiApplemusic /> Apple Music
               </a>
             </div>
-          </>
-        ) : (
-          <>
-            <p className="spotify-text">
-              Not listening to anything right now.
-            </p>
-            <img
-              src="/images/spongebob-sleeping.gif"
-              alt="Sleeping SpongeBob"
-              className="spotify-gif"
-            />
-          </>
-        )}
-      </div>
-    </section>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

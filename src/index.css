@@ -393,27 +393,49 @@ footer {
   }
 }
 
-.spotify-now {
+.spotify-mini {
   display: flex;
   align-items: center;
-  gap: 0.9rem;
-  min-width: 0;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #141414;
 }
 
-.spotify-art {
-  width: 46px;
-  height: 46px;
-  border-radius: 4px;
+.spotify-mini.is-clickable {
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.spotify-mini.is-clickable:hover {
+  border-color: var(--gold);
+  background: #171717;
+}
+
+.spotify-mini-art {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
   object-fit: cover;
   flex-shrink: 0;
 }
 
-.spotify-info {
+.spotify-mini-info {
   min-width: 0;
+  flex: 1;
 }
 
-.spotify-song {
+.spotify-mini-label {
+  font-size: 0.78rem;
+  color: var(--gold);
+  opacity: 0.85;
+  margin-bottom: 0.15rem;
+}
+
+.spotify-mini-song {
   font-size: 0.92rem;
+  font-weight: 600;
   color: var(--text);
   white-space: nowrap;
   overflow: hidden;
@@ -422,69 +444,204 @@ footer {
 
 .spotify-dash {
   color: var(--text-dim);
+  font-weight: 400;
 }
 
-.spotify-links {
+.spotify-mini-platform {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  margin-top: 0.15rem;
+}
+
+.spotify-mini-actions {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   flex-shrink: 0;
 }
 
-.eq-bars {
+.eq-badge {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: center;
   gap: 2px;
-  height: 14px;
-  margin-right: 0.3rem;
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: #2a2a2a;
+  margin-right: 0.25rem;
 }
 
-.eq-bars span {
+.eq-badge span {
   width: 2px;
-  background: var(--gold);
+  height: 8px;
+  border-radius: 1px;
+  background: var(--text-dim);
   animation: eq-bounce 0.9s ease-in-out infinite;
 }
 
-.eq-bars span:nth-child(1) { height: 40%; animation-delay: 0s; }
-.eq-bars span:nth-child(2) { height: 100%; animation-delay: 0.2s; }
-.eq-bars span:nth-child(3) { height: 65%; animation-delay: 0.4s; }
+.eq-badge span:nth-child(1) { animation-delay: 0s; }
+.eq-badge span:nth-child(2) { animation-delay: 0.15s; }
+.eq-badge span:nth-child(3) { animation-delay: 0.3s; }
+.eq-badge span:nth-child(4) { animation-delay: 0.45s; }
 
 @keyframes eq-bounce {
-  0%, 100% { height: 30%; }
-  50% { height: 100%; }
+  0%, 100% { height: 5px; }
+  50% { height: 12px; }
 }
 
-.spotify-link-icon {
+.icon-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  color: var(--bg);
+  color: #fff;
   flex-shrink: 0;
   transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
-.spotify-link-icon svg {
-  width: 16px;
-  height: 16px;
+.icon-btn svg {
+  width: 13px;
+  height: 13px;
 }
 
-.spotify-link-icon:hover {
+.icon-btn:hover {
   transform: scale(1.08);
   opacity: 0.9;
 }
 
-.spotify-link-yt { background: #ff3b30; }
-.spotify-link-spotify { background: #1db954; }
-.spotify-link-apple { background: #fa2d6e; }
+.icon-btn-yt { background: #ff3b30; }
+.icon-btn-spotify { background: #1db954; }
+.icon-btn-apple {
+  background: #fa2d6e;
+  border-radius: 30%;
+}
+.icon-btn-apple svg {
+  width: 15px;
+  height: 15px;
+}
 
 @media (max-width: 480px) {
-  .spotify-card {
+  .spotify-mini {
     flex-wrap: wrap;
   }
 }
+
+/* ============================================
+   NOW PLAYING MODAL
+   ============================================ */
+
+.np-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 100;
+}
+
+.np-modal {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: #141414;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.75rem;
+}
+
+.np-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  cursor: pointer;
+  border: none;
+}
+
+.np-modal-close:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.np-modal-art {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 1.25rem;
+}
+
+.np-modal-label {
+  font-size: 0.85rem;
+  color: var(--gold);
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+}
+
+.np-modal-title {
+  font-size: 1.7rem;
+  margin-bottom: 0.25rem;
+}
+
+.np-modal-artist {
+  font-size: 1rem;
+  color: var(--text-dim);
+}
+
+.np-modal-album {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  opacity: 0.7;
+  margin-bottom: 1rem;
+}
+
+.np-modal-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.3rem 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.np-modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.np-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+}
+
+.np-action-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.np-action-yt { background: #ff3b30; }
+.np-action-spotify { background: #1a1a1a; color: #1db954; border: 1px solid var(--border); }
+.np-action-apple { background: #fa2d6e; }
 
 /* ============================================
    PROJECT DETAILS PAGE
