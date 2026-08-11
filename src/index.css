@@ -613,8 +613,6 @@ footer {
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 1.25rem;
-  max-height: 88vh;
-  overflow-y: auto;
 }
 
 .np-modal-close {
@@ -698,31 +696,7 @@ footer {
   opacity: 0.85;
 }
 
-.np-modal-eq {
-  flex-shrink: 0;
-}
 
-.np-modal-eq-bar {
-  width: 10px;
-  height: 3px;
-  border-radius: 999px;
-  background: var(--text);
-  opacity: 0.4;
-  animation-name: eq-pulse;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-}
-
-@keyframes eq-pulse {
-  0%, 100% {
-    opacity: 0.35;
-    transform: scaleX(0.7);
-  }
-  50% {
-    opacity: 1;
-    transform: scaleX(1);
-  }
-}
 
 .np-modal-title {
   margin-top: 0.5rem;
