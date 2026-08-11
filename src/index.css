@@ -990,3 +990,36 @@ footer {
   color: var(--text);
   border-color: var(--text);
 }
+
+/* PAGE LOADER */
+.page-loader {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0a;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+.page-loader-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.page-loader-spinner {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid rgba(245, 245, 245, 0.15);
+  border-top-color: #f5f5f5;
+  animation: page-loader-spin 0.8s linear infinite;
+}
+
+@keyframes page-loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
