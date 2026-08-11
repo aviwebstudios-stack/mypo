@@ -233,7 +233,7 @@ export default function Spotify() {
             <div className="np-modal-body">
               <div className="np-modal-toprow">
                 <p className="np-modal-label">I'm currently listening to</p>
-                <EqBars />
+                <EqBars className="np-modal-eq" />
               </div>
 
               <h2 className="np-modal-title">{data.title}</h2>
