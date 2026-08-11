@@ -786,20 +786,6 @@ footer {
   text-overflow: ellipsis;
 }
 
-@media (max-width: 420px) {
-  .np-modal-art-wrap {
-    height: 14rem;
-  }
-
-  .np-modal-actions {
-    grid-template-columns: 1fr;
-  }
-
-  .np-action-btn {
-    justify-content: flex-start;
-    padding: 0 0.9rem;
-  }
-}
 /* ============================================
    PROJECT DETAILS PAGE
    ============================================ */
