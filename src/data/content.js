@@ -1,8 +1,8 @@
 export const profile = {
   name: "Vanessa",
-  role: "SOFTWARE ENGINEER",
+  role: "FULL-STACK SOFTWARE ENGINEER",
   heroTagline:
-    "I build modern web applications for businesses that value clarity, performance, and long-term scalability.",
+    "I build scalable web applications with React, Next.js, TypeScript, Node.js, and PostgreSQL.",
   email: "aviwebstudios@gmail.com",
   resumeUrl: "/resume.pdf",
   socials: [
