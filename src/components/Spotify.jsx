@@ -126,41 +126,25 @@ export default function Spotify() {
     <>
       <section className="wrap spotify-section">
         {isPlaying ? (
-          <div className="spotify-mini-card">
-            <button
-              type="button"
-              className="spotify-mini-trigger"
-              onClick={() => setOpen(true)}
+          <div
+            className="spotify-mini-card is-clickable"
+            onClick={() => setOpen(true)}
+            role="button"
+            tabIndex={0}
+          >
+            <div className="spotify-mini-text">
+              <p className="spotify-mini-label">I'm currently listening to</p>
+              <p className="spotify-mini-song">
+                {data.title} <span className="spotify-dash">-</span>{" "}
+                {data.artist}
+              </p>
+              <p className="spotify-mini-platform">Spotify</p>
+            </div>
+
+            <div
+              className="spotify-mini-links"
+              onClick={(e) => e.stopPropagation()}
             >
-              <div className="spotify-art-wrap">
-                <div
-                  className="spotify-art-glow"
-                  style={{ backgroundImage: `url(${data.albumImageUrl})` }}
-                  aria-hidden="true"
-                />
-                <div className="spotify-art-sheen" aria-hidden="true" />
-                <img
-                  src={data.albumImageUrl}
-                  alt={data.album}
-                  className="spotify-art-img"
-                />
-              </div>
-
-              <div className="spotify-mini-text">
-                <div className="spotify-mini-copy">
-                  <p className="spotify-mini-label">I'm currently listening to</p>
-                  <p className="spotify-mini-song">
-                    {data.title} <span className="spotify-dash">-</span>{" "}
-                    {data.artist}
-                  </p>
-                  <p className="spotify-mini-platform">Spotify</p>
-                </div>
-
-                <EqBars />
-              </div>
-            </button>
-
-            <div className="spotify-mini-links">
               <a
                 href={data.links.youtubeMusic}
                 target="_blank"
@@ -192,6 +176,12 @@ export default function Spotify() {
                 <IconAppleMusic gradientId="apple-music-gradient-mini" />
               </a>
             </div>
+
+            <img
+              src="/images/spongebob-listening.gif"
+              alt="Listening SpongeBob"
+              className="spotify-mini-gif"
+            />
           </div>
         ) : (
           <div className="spotify-card">

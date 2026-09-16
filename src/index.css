@@ -409,71 +409,7 @@ footer {
   background: rgba(255, 255, 255, 0.07);
 }
 
-.spotify-mini-trigger {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex: 1;
-  min-width: 0;
-  text-align: left;
-  background: none;
-  border: none;
-  color: inherit;
-  cursor: pointer;
-  padding: 0;
-  font: inherit;
-}
 
-/* Album art with blurred glow + sheen */
-.spotify-art-wrap {
-  position: relative;
-  flex-shrink: 0;
-  width: 56px;
-  height: 56px;
-}
-
-.spotify-art-glow {
-  position: absolute;
-  inset: 0;
-  border-radius: 8px;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.45;
-  filter: blur(16px) saturate(1.5);
-  transition: opacity 0.5s ease;
-}
-
-.spotify-mini-card:hover .spotify-art-glow {
-  opacity: 0.75;
-}
-
-.spotify-art-sheen {
-  position: absolute;
-  inset: -1px;
-  border-radius: 8px;
-  background: linear-gradient(
-    to bottom right,
-    rgba(255, 255, 255, 0.25),
-    rgba(255, 255, 255, 0.05),
-    rgba(0, 0, 0, 0.3)
-  );
-  opacity: 0.8;
-}
-
-.spotify-art-img {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  object-fit: cover;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.32);
-  transition: transform 0.5s ease;
-}
-
-.spotify-mini-card:hover .spotify-art-img {
-  transform: rotate(-1deg) scale(1.03);
-}
 
 /* Text + eq row */
 .spotify-mini-text {
@@ -484,9 +420,30 @@ footer {
   min-width: 0;
 }
 
-.spotify-mini-copy {
+
+
+
+.spotify-mini-text {
   min-width: 0;
+  flex: 1;
 }
+
+.spotify-mini-links {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.spotify-mini-gif {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+
+
 
 .spotify-mini-label {
   font-size: 0.82rem;
