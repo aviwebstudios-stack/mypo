@@ -29,7 +29,7 @@ export default function Footer() {
   const year = toRoman(new Date().getFullYear());
   return (
     <footer className="wrap">
-      <p className="footer-copy">&copy; {year} &middot; Vanessa.</p>
+      <p className="footer-copy">&copy; <span className="footer-year">{year}</span> &middot; Vanessa.</p>
     </footer>
   );
 }

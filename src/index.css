@@ -10,7 +10,8 @@
 
   --font-display: "Instrument Serif", Georgia, serif;
   --font-body:
-    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
 
   --col: 620px;
 }
@@ -256,6 +257,12 @@ button:focus-visible {
   border-top: 1px solid var(--border);
 }
 
+.footer-year {
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  letter-spacing: 0.04em;
+}
+
 .project-row:hover {
   border-left-color: var(--gold);
 }
@@ -295,6 +302,7 @@ a.project-row:hover .project-arrow {
 }
 
 .project-domain {
+  font-family: var(--font-mono);
   font-size: 0.68rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -309,6 +317,7 @@ a.project-row:hover .project-arrow {
   max-width: 54ch;
 }
 .project-stack {
+  font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.03em;
   color: var(--text-dim);

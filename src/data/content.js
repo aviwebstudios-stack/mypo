@@ -8,10 +8,7 @@ export const profile = {
   socials: [
     { label: "Email", href: "mailto:aviwebstudios@gmail.com" },
     { label: "LinkedIn", href: "https://linkedin.com/in/vanessa-awo" },
-    {
-      label: "GitHub",
-      href: "https://github.com/awoiwinosavanessa/awoiwinosavanessa.github.io",
-    },
+    { label: "GitHub", href: "https://github.com/aviwebstudios-stack" },
     { label: "Twitter", href: "https://x.com/aviwebstudios" },
   ],
 };
