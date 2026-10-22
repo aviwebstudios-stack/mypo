@@ -10,25 +10,55 @@ const {
   SPOTIFY_REFRESH_TOKEN,
 } = process.env;
 
+class SpotifyError extends Error {
+  constructor(code, message, status = 502) {
+    super(message);
+    this.code = code;
+    this.status = status;
+  }
+}
+
+// fetch() only throws on network failures (DNS, timeout, connection reset),
+// so anything caught here means Spotify was never reached.
+async function request(url, options, target) {
+  try {
+    return await fetch(url, options);
+  } catch (err) {
+    throw new SpotifyError(
+      "SPOTIFY_NETWORK_ERROR",
+      `Network error reaching ${target}: ${err.message}`,
+      503
+    );
+  }
+}
+
 async function getAccessToken() {
   const basic = Buffer.from(
     `${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`
   ).toString("base64");
 
-  const res = await fetch("https://accounts.spotify.com/api/token", {
-    method: "POST",
-    headers: {
-      Authorization: `Basic ${basic}`,
-      "Content-Type": "application/x-www-form-urlencoded",
+  const res = await request(
+    "https://accounts.spotify.com/api/token",
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Basic ${basic}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        grant_type: "refresh_token",
+        refresh_token: SPOTIFY_REFRESH_TOKEN,
+      }),
     },
-    body: new URLSearchParams({
-      grant_type: "refresh_token",
-      refresh_token: SPOTIFY_REFRESH_TOKEN,
-    }),
-  });
+    "Spotify accounts service"
+  );
 
   if (!res.ok) {
-    throw new Error(`Failed to refresh token: ${res.status}`);
+    const body = await res.text().catch(() => "");
+    throw new SpotifyError(
+      "SPOTIFY_TOKEN_REFRESH_FAILED",
+      `Token refresh failed with status ${res.status}${body ? `: ${body}` : ""}`
+    );
   }
 
   const data = await res.json();
@@ -36,22 +66,42 @@ async function getAccessToken() {
 }
 
 export default async function handler(req, res) {
-  // Cache at the edge for a few seconds so rapid page loads don't
-  // hammer Spotify's API.
-  res.setHeader("Cache-Control", "s-maxage=10, stale-while-revalidate");
-
   try {
     const accessToken = await getAccessToken();
 
-    const nowPlayingRes = await fetch(
+    const nowPlayingRes = await request(
       "https://api.spotify.com/v1/me/player/currently-playing",
-      {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      }
+      { headers: { Authorization: `Bearer ${accessToken}` } },
+      "Spotify API"
     );
 
+    if (nowPlayingRes.status === 401) {
+      throw new SpotifyError(
+        "SPOTIFY_UNAUTHORIZED",
+        "Spotify rejected the access token (401)"
+      );
+    }
+
+    if (nowPlayingRes.status >= 500) {
+      throw new SpotifyError(
+        "SPOTIFY_SERVER_ERROR",
+        `Spotify API returned ${nowPlayingRes.status}`
+      );
+    }
+
+    if (!nowPlayingRes.ok) {
+      throw new SpotifyError(
+        "SPOTIFY_REQUEST_FAILED",
+        `Spotify API returned ${nowPlayingRes.status}`
+      );
+    }
+
+    // Cache at the edge for a few seconds so rapid page loads don't
+    // hammer Spotify's API. Only successful responses are cached.
+    res.setHeader("Cache-Control", "s-maxage=10, stale-while-revalidate");
+
     // 204 = nothing currently playing
-    if (nowPlayingRes.status === 204 || nowPlayingRes.status > 400) {
+    if (nowPlayingRes.status === 204) {
       return res.status(200).json({ isPlaying: false });
     }
 
@@ -84,6 +134,9 @@ export default async function handler(req, res) {
     });
   } catch (err) {
     console.error(err);
-    return res.status(200).json({ isPlaying: false });
+    res.setHeader("Cache-Control", "no-store");
+    const code = err.code ?? "SPOTIFY_UNEXPECTED_ERROR";
+    const status = err.status ?? 500;
+    return res.status(status).json({ error: { code, message: err.message } });
   }
 }

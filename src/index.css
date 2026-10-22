@@ -508,7 +508,7 @@ footer {
   50% { transform: scaleY(1); }
 }
 
-/* Platform link icons — glassy neutral buttons */
+/* Platform link icons, glassy neutral buttons */
 .spotify-mini-links {
   display: flex;
   align-items: center;
@@ -921,10 +921,14 @@ footer {
 }
 
 .detail-section li::before {
-  content: "—";
+  content: "";
   position: absolute;
   left: 0;
-  color: var(--gold);
+  /* centre on the first line: half of line-height (1.65) minus half the square */
+  top: calc(0.825em - 2.5px);
+  width: 5px;
+  height: 5px;
+  background: var(--gold);
 }
 
 .detail-stack {

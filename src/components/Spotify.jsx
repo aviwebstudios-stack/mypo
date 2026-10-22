@@ -83,9 +83,16 @@ export default function Spotify() {
       try {
         const res = await fetch("/api/now-playing");
         const json = await res.json();
+        if (!res.ok || json.error) {
+          const { code, message } = json.error ?? {};
+          throw new Error(
+            `${code ?? `HTTP_${res.status}`}: ${message ?? res.statusText}`
+          );
+        }
         if (!cancelled) setData(json);
-      } catch {
-        if (!cancelled) setData({ isPlaying: false });
+      } catch (err) {
+        console.error("[now-playing]", err);
+        if (!cancelled) setData({ isPlaying: false, error: true });
       }
     }
 
@@ -185,7 +192,11 @@ export default function Spotify() {
           </div>
         ) : (
           <div className="spotify-card">
-            <p className="spotify-text">Not listening to anything right now.</p>
+            <p className="spotify-text">
+              {data.error
+                ? "Can't reach Spotify right now."
+                : "Not listening to anything right now."}
+            </p>
             <img
               src="/images/spongebob-sleeping.gif"
               alt="Sleeping SpongeBob"

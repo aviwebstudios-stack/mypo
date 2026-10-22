@@ -18,7 +18,9 @@ export default function ProjectDetails() {
     <section className="project-details wrap">
       <Link className="detail-topnav" to="/">← Projects</Link>
 
-      <img src={project.image} alt={project.title} className="detail-hero" />
+      {project.image && (
+        <img src={project.image} alt={project.title} className="detail-hero" />
+      )}
 
       <h1 className="font-display">{project.title}</h1>
       <p className="detail-summary">{project.description}</p>

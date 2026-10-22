@@ -7,7 +7,7 @@ import ProjectDetails from "./pages/ProjectDetails";
 import ScrollToTop from "./components/ScrollToTop";
 import Spotify from "./components/Spotify";
 
-const MIN_LOAD_TIME = 900; // ms — tweak this to make it show longer/shorter
+const MIN_LOAD_TIME = 900; // ms, tweak this to make it show longer/shorter
 
 function Home() {
   return (
