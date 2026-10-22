@@ -16,41 +16,6 @@ export const profile = {
 //PROJECTS//
 export const projects = [
   {
-    id: "oralogs",
-    title: "Oralogs",
-    stack: ["Next.js", "Node.js", "Express", "MongoDB", "Telegram Bot API"],
-    description:
-      "Built a token-based campaign platform with password-gated pages, voting, giveaways, claim flows, and real-time owner notifications through a Telegram bot.",
-    links: [{ label: "Visit Site", href: "https://oralogs.app" }],
-    href: "https://oralogs.app",
-    image: "/images/oralogs.png",
-    gallery: [
-      "/images/oralogs-landing.png",
-      "/images/oralogs-campaign.png",
-      "/images/oralogs-voting.png",
-      "/images/oralogs-admin.png",
-    ],
-    overview:
-      "Oralogs is a campaign management platform built for teams running token-gated promotions, voting, giveaways, and reward claims that need to stay restricted to verified participants. Campaign owners often lose track of engagement in real time, so the platform pairs a password-gated web app with a Telegram bot that pushes instant notifications the moment a new vote, claim, or entry comes in. I built it to solve the gap between running a campaign and knowing what's happening inside it without constantly refreshing a dashboard.",
-    features: [
-      "Password-gated campaign pages",
-      "Token-based voting system",
-      "Giveaway and claim flows",
-      "Real-time Telegram bot notifications",
-      "Campaign owner dashboard",
-    ],
-    metrics: ["5 Core Features", "Real-time Alerts", "Token-Gated Access"],
-    challenges: [
-      "Keeping campaign state consistent across the web app and Telegram bot in real time",
-      "Preventing race conditions when multiple users voted or claimed simultaneously",
-      "Securing password-gated pages without adding friction for legitimate participants",
-    ],
-    learned: [
-      "Improved my approach to keeping two systems (web app + bot) in sync without conflicting writes.",
-      "Learned to design claim flows that stay fair under concurrent access.",
-    ],
-  },
-  {
     id: "fway-shipping",
     title: "Fway Shipping",
     stack: ["React", "Node.js", "Express", "MySQL"],
